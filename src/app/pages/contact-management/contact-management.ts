@@ -1,5 +1,4 @@
-
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, ViewChild, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { finalize } from 'rxjs';
 
@@ -18,6 +17,7 @@ import { ContactForm } from '../../components/contact-form/contact-form';
 })
 export class ContactManagement implements OnInit {
   private contactService = inject(ContactService);
+  private cdr = inject(ChangeDetectorRef);
   @ViewChild(ContactForm) contactForm!: ContactForm;
 
 
@@ -45,17 +45,28 @@ export class ContactManagement implements OnInit {
         .includes(query)
     );
   }
+loadContacts(): void {
+  this.loading = true;
+  this.cdr.markForCheck();
 
-  loadContacts(): void {
-    this.loading = true;
+  this.contactService.getContacts().subscribe({
+    next: (data) => {
+      this.contacts = [...data];
+      this.loading = false;
 
-    this.contactService.getContacts()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: data => this.contacts = data,
-        error: () => this.notify('Failed to load contacts.', 'error')
-      });
-  }
+      this.cdr.markForCheck();
+
+      console.log('Contacts loaded:', this.contacts.length);
+    },
+    error: (error) => {
+      this.loading = false;
+      this.cdr.markForCheck();
+
+      console.error('Failed to load contacts:', error);
+      this.notify('Failed to load contacts.', 'error');
+    }
+  });
+}
 
 saveContact(data: ContactPayload): void {
   if (this.saving) return;

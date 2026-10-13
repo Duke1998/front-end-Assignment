@@ -2,175 +2,375 @@
 <div class="editor-page">
 
   <div class="breadcrumb">
-    <span>Campaigns</span>
+    <span>Send Marketing Message</span>
     <span>/</span>
-    <span>Templates</span>
-    <span>/</span>
-    <strong>Customize Your Message</strong>
+    <strong>Compose Message</strong>
   </div>
 
   <div class="page-heading">
     <div class="back-icon">←</div>
     <div>
       <h1>Customize Your Message</h1>
-      <p>Personalize your template message with dynamic content.</p>
+      <p>Fill in the required deatils based on your selected template to complete the message setup</p>
     </div>
   </div>
+
+           <div class="template-details">
+  <div class="template-detail">
+    <span>Template Name</span>
+    <strong>Default Sale</strong>
+  </div>
+
+  <div class="template-detail">
+    <span>Template ID</span>
+    <strong>Sample Template</strong>
+  </div>
+
+  <div class="template-detail">
+    <span>Message Type</span>
+    <strong>Text and Media</strong>
+  </div>
+
+  <div class="template-detail">
+    <span>Language</span>
+    <strong>English</strong>
+  </div>
+</div>
 
   <form [formGroup]="form" (ngSubmit)="submit()">
 
     <section class="editor-card">
-      <div class="section-title">
-        <span class="section-icon">▣</span>
-        <div>
-          <h2>Header</h2>
-          <p>Configure optional media and location information.</p>
-        </div>
-      </div>
+  <div class="section-title">
+    <span class="section-icon">▣</span>
+    <div>
+      <h2>Header</h2>
+    </div>
+  </div>
 
-      <div class="field-grid">
-        <label>
-          Image URL
-          <input formControlName="imageUrl"
-                 placeholder="https://example.com/image.png" />
-          <small>Enter a public image URL.</small>
-        </label>
+  <div class="field-grid">
+    <label>
+      Image URL
+      <input
+        type="url"
+        formControlName="imageUrl"
+        placeholder="https://"
+      />
+      <small>Link to supported file format:Jpg,jpeg,png up to 5MB.image may be cropped 
+        on certain devices.Recommended resolution:1125 by 600px</small>
+    </label>
 
-        <label>
-          Video URL
-          <input formControlName="videoUrl"
-                 placeholder="https://example.com/video.mp4" />
-          <small>Enter a public video URL.</small>
-        </label>
+    <label>
+      Video URL
+      <input
+        type="url"
+        formControlName="videoUrl"
+        placeholder="https://"
+      />
+      <small>Link to supported file format:MP4 upto 16MB.Video may be cropped 
+        on certain devices.Recommended resolution:1125 by 600px</small>
+    </label>
 
-        <label>
-          Document URL
-          <input formControlName="documentUrl"
-                 placeholder="https://example.com/document.pdf" />
-          <small>Enter a public document URL.</small>
-        </label>
+    <label>
+      Document URL
+      <input
+        type="url"
+        formControlName="documentUrl"
+        placeholder="https://"
+      />
+      <small>Link to supported file format:PDF up to 100MB</small>
+    </label>
 
-        <div class="coordinate-grid">
-          <label>
-            Latitude
-            <input formControlName="latitude"
-                   placeholder="e.g. 12.9716" />
-          </label>
-
-          <label>
-            Longitude
-            <input formControlName="longitude"
-                   placeholder="e.g. 77.5946" />
-          </label>
-        </div>
-      </div>
-    </section>
-
-    <section class="editor-card">
-      <div class="section-title">
-        <span class="section-icon">☰</span>
-        <div>
-          <h2>Message</h2>
-          <p>Configure your message content and dynamic variables.</p>
-        </div>
-      </div>
-
-      <label class="full-field">
-        Message Content *
-        <textarea rows="4"
-                  formControlName="message"
-                  placeholder="Enter your message..."></textarea>
-        @if (form.controls.message.invalid &&
-             form.controls.message.touched) {
-          <small class="error">Message content is required.</small>
-        }
+    <div class="coordinate-grid">
+      <label>
+        Location Latitude
+        <input
+          type="number"
+          formControlName="latitude"
+          placeholder="0"
+          step="any"
+        />
+           <small>Latitude can be any number between -90 to 90</small>
       </label>
 
-      <div class="field-grid message-fields">
-        <label>
-          Variable 1
-          <input formControlName="variable1"
-                 placeholder="Enter variable value" />
-        </label>
+      <label>
+        Location Longitude
+        <input
+          type="number"
+          formControlName="longitude"
+          placeholder="0"
+          step="any"
+        />
+        <small>Longitude can be any number between -180 to 180</small>
+      </label>
+    </div>
+  </div>
+</section>
 
-        <label>
-          Variable 2
-          <input formControlName="variable2"
-                 placeholder="Enter variable value" />
-        </label>
+
+<!-- MESSAGE SECTION START -->
+<section class="editor-card message-card">
+
+  <div class="section-title">
+    <span class="section-icon">☰</span>
+    <div>
+      <h2>Message</h2>
+     
+    </div>
+  </div>
+
+  <div class="message-fields">
+
+    <!-- VARIABLE 1 -->
+    <div class="variable-field">
+      <label for="variable1">Variable &#123;&#123;1&#125;&#125;</label>
+
+      <div class="payload-input">
+        <input
+          id="variable1"
+          formControlName="variable1"
+          placeholder="Enter variable content" />
+
+        <button
+          type="button"
+          class="input-icon"
+          aria-label="Insert emoji in variable 1"
+          (click)="insertEmoji('variable1')">☺</button>
+
+        <button
+          type="button"
+          class="input-icon"
+          aria-label="Select attribute for variable 1"
+          (click)="toggleVariableAttributes('variable1')">&#123;&#125;</button>
       </div>
 
-      <div class="attribute-area">
-        <label>Insert Attribute</label>
+      @if (showAttributes && activeVariable === 'variable1') {
+        <ng-container
+          [ngTemplateOutlet]="attributePicker">
+        </ng-container>
+      }
+    </div>
 
-        <button type="button"
-                class="attribute-trigger"
-                (click)="toggleAttributes()"
-                [attr.aria-expanded]="showAttributes">
-          Select an attribute
-          <span>⌄</span>
+    <!-- VARIABLE 2 -->
+    <div class="variable-field">
+      <label for="variable2">Variable &#123;&#123;2&#125;&#125;</label>
+
+      <div class="payload-input">
+        <input
+          id="variable2"
+          formControlName="variable2"
+          placeholder="Enter variable content" />
+
+        <button
+          type="button"
+          class="input-icon"
+          aria-label="Insert emoji in variable 2"
+          (click)="insertEmoji('variable2')">☺</button>
+
+        <button
+          type="button"
+          class="input-icon"
+          aria-label="Select attribute for variable 2"
+          (click)="toggleVariableAttributes('variable2')">&#123;&#125;</button>
+      </div>
+
+      @if (showAttributes && activeVariable === 'variable2') {
+        <ng-container
+          [ngTemplateOutlet]="attributePicker">
+        </ng-container>
+      }
+    </div>
+
+  </div>
+
+  
+ 
+
+</section>
+
+
+
+
+
+   
+
+
+
+     <section class="editor-card buttons-card">
+  <div class="section-title">
+    <span class="section-icon">▤</span>
+    <div>
+      <h2>Buttons</h2>
+      
+    </div>
+  </div>
+
+  <div class="button-fields">
+
+    <div class="payload-field">
+      <div class="payload-label">
+        <label for="yesPayload">
+          "Yes" button payload
+          <span class="info-icon" title="Yes button response">ⓘ</span>
+        </label>
+        <span class="char-count">
+          {{ form.controls.yesPayload.value.length }}/128
+        </span>
+      </div>
+
+      <div class="payload-input">
+        <input
+          id="yesPayload"
+          formControlName="yesPayload"
+          placeholder="Enter the payload"
+          maxlength="128"
+        />
+        <button type="button" class="input-icon"
+          aria-label="Insert emoji"
+          (click)="insertEmoji('yesPayload')">☺</button>
+        <button type="button" class="input-icon"
+          aria-label="Insert attribute"
+          (click)="insertVariable('yesPayload')">&#123;&#125;</button>
+      </div>
+      @if (showAttributes && activeVariable === 'yesPayload') {
+  <ng-container [ngTemplateOutlet]="attributePicker"></ng-container>
+}
+    </div>
+
+    <div class="payload-field">
+      <div class="payload-label">
+        <label for="noPayload">
+          "No" button payload
+          <span class="info-icon" title="No button response">ⓘ</span>
+        </label>
+        <span class="char-count">
+          {{ form.controls.noPayload.value.length }}/128
+        </span>
+      </div>
+
+      <div class="payload-input">
+        <input
+          id="noPayload"
+          formControlName="noPayload"
+          placeholder="Enter the payload"
+          maxlength="128"
+        />
+        <button type="button" class="input-icon"
+          aria-label="Insert emoji"
+          (click)="insertEmoji('noPayload')">☺</button>
+        <button type="button" class="input-icon"
+          aria-label="Insert attribute"
+          (click)="insertVariable('noPayload')">&#123;&#125;</button>
+      </div>
+    @if (showAttributes && activeVariable === 'noPayload') {
+  <ng-container [ngTemplateOutlet]="attributePicker"></ng-container>
+}
+    </div>
+
+    <div class="payload-field">
+      <div class="payload-label">
+        <label for="unsubscribePayload">
+          "Unsubscribe!" button payload
+          <span class="info-icon" title="Unsubscribe response">ⓘ</span>
+        </label>
+        <span class="char-count">
+          {{ form.controls.unsubscribePayload.value.length }}/128
+        </span>
+      </div>
+
+      <div class="payload-input">
+        <input
+          id="unsubscribePayload"
+          formControlName="unsubscribePayload"
+          placeholder="Enter the payload"
+          maxlength="128"
+        />
+        <button type="button" class="input-icon"
+          aria-label="Insert emoji"
+          (click)="insertEmoji('unsubscribePayload')">☺</button>
+        <button type="button" class="input-icon"
+          aria-label="Insert attribute"
+          (click)="insertVariable('unsubscribePayload')">&#123;&#125;</button>
+      </div>
+      @if (showAttributes && activeVariable === 'unsubscribePayload') {
+  <ng-container [ngTemplateOutlet]="attributePicker"></ng-container>
+}
+    </div>
+
+    <div class="payload-field">
+      <div class="payload-label">
+        <label for="websiteUrl">
+          "Visit website" URL parameter
+          <span class="info-icon" title="Website URL parameter">ⓘ</span>
+        </label>
+        <span class="char-count">
+          {{ form.controls.websiteUrl.value.length }}/128
+        </span>
+      </div>
+
+      <div class="payload-input">
+        <input
+          id="websiteUrl"
+          formControlName="websiteUrl"
+          placeholder="Enter the payload"
+          maxlength="128"
+        />
+        <button type="button" class="input-icon"
+          aria-label="Insert emoji"
+          (click)="insertEmoji('websiteUrl')">☺</button>
+        <button type="button" class="input-icon"
+          aria-label="Insert attribute"
+          (click)="insertVariable('websiteUrl')">&#123;&#125;</button>
+      </div>
+      @if (showAttributes && activeVariable === 'websiteUrl') {
+  <ng-container [ngTemplateOutlet]="attributePicker"></ng-container>
+}
+    </div>
+
+  </div>
+</section> 
+
+ <ng-template #attributePicker>
+    <div class="variable-attribute-menu">
+
+      <input
+        type="search"
+        placeholder="Search Standard Attributes"
+        [value]="searchTerm"
+        (input)="searchTerm = $any($event.target).value" />
+
+      <div class="attribute-tabs">
+        <button
+          type="button"
+          [class.active]="activeTab === 'standard'"
+          (click)="setAttributeTab('standard')">
+          Standard
         </button>
 
-        @if (showAttributes) {
-          <div class="attribute-menu">
-            <input
-              type="search"
-              placeholder="Search attributes..."
-              [value]="searchTerm"
-              (input)="searchTerm = $any($event.target).value"
-            />
+        <button
+          type="button"
+          [class.active]="activeTab === 'custom'"
+          (click)="setAttributeTab('custom')">
+          Custom
+        </button>
+      </div>
 
-            @for (attribute of filteredAttributes; track attribute) {
-              <button type="button"
-                      class="attribute-option"
-                      (click)="selectAttribute(attribute)">
-                {{ attribute }}
-              </button>
-            } @empty {
-              <p class="empty-state">No attributes found.</p>
-            }
-          </div>
+      <div class="attribute-options">
+        @for (attribute of filteredAttributes; track attribute) {
+          <button
+            type="button"
+            (click)="selectAttribute(attribute)">
+            <span>&#123;&#125;</span>
+            {{ attribute }}
+          </button>
+        } @empty {
+          <p class="empty-state">No attributes found.</p>
         }
       </div>
-    </section>
 
-    <section class="editor-card">
-      <div class="section-title">
-        <span class="section-icon">▤</span>
-        <div>
-          <h2>Buttons</h2>
-          <p>Configure the actions available to your recipients.</p>
-        </div>
-      </div>
+    </div>
+  </ng-template>
 
-      <div class="field-grid">
-        <label>
-          Yes Button Payload
-          <input formControlName="yesPayload"
-                 placeholder="Yes" />
-        </label>
-
-        <label>
-          No Button Payload
-          <input formControlName="noPayload"
-                 placeholder="No" />
-        </label>
-
-        <label>
-          Unsubscribe Payload
-          <input formControlName="unsubscribePayload"
-                 placeholder="Unsubscribe" />
-        </label>
-
-        <label>
-          Visit Website URL
-          <input formControlName="websiteUrl"
-                 placeholder="https://example.com" />
-        </label>
-      </div>
-    </section>
-
-    @if (notification) {
+      @if (notification) {
       <div class="notification" role="status">
         {{ notification }}
       </div>
@@ -188,4 +388,5 @@
     </div>
 
   </form>
+ 
 </div>

@@ -4,7 +4,7 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'contacts',
+    redirectTo: 'message-editor',
     pathMatch: 'full'
   },
   {
@@ -21,7 +21,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'contacts'
+    redirectTo: 'message-editor'
   }
 ];
-
