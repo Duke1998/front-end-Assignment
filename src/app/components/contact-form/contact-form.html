@@ -89,19 +89,20 @@
       </label>
 
       <!-- PAN Number -->
-      <label>
-        PAN Number *
-        <input
-          type="text"
-          formControlName="pan_no"
-          maxlength="10"
-          placeholder="ABCDE1234F"
-          style="text-transform: uppercase"
-        />
-        @if (isInvalid('pan_no')) {
-          <small>Enter a valid 10-character PAN number.</small>
-        }
-      </label>
+    <label>
+  PAN Number *
+  <input
+    type="text"
+    formControlName="pan_no"
+    maxlength="10"
+    placeholder="ABCDE1234F"
+    style="text-transform: uppercase"
+    (input)="onPanInput($event)"
+  />
+  @if (isInvalid('pan_no')) {
+    <small>Enter a valid 10-character PAN number.</small>
+  }
+</label>
 
       <!-- Aadhaar Number -->
       <label>

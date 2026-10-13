@@ -38,6 +38,14 @@ export class ContactForm implements OnChanges {
   @Output() saveContact = new EventEmitter<ContactPayload>();
   @Output() cancelEdit = new EventEmitter<void>();
 
+onPanInput(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const uppercaseValue = input.value.toUpperCase();
+
+  input.value = uppercaseValue;
+  this.form.controls.pan_no.setValue(uppercaseValue);
+}
+
   form = this.fb.nonNullable.group({
     createdAt: ['', Validators.required],
 
