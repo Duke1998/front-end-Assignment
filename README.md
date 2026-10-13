@@ -7,6 +7,10 @@ Features
 Task 1:The Message Editor is a responsive and interactive application designed to customize message templates efficiently
 Task 2: The Contact Management application is developed using Angular 22, TypeScript, HTML5, CSS3, Angular Reactive Forms, RxJS, and REST APIs.
 
+Default Landing Page
+
+The application opens the Message Editor by default at http://localhost:4200/. Use the navigation to access Contact Management.
+
 Base URL:
 
 https://65c0cfa6dc74300bce8cc64d.mockapi.io/Contact/profile
