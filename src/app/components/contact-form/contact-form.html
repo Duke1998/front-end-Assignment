@@ -1,0 +1,168 @@
+
+<section class="form-card">
+  <h2>{{ contact ? 'Edit Contact' : 'Add New Contact' }}</h2>
+  <p class="subtitle">Enter the contact information below.</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <div class="form-grid">
+
+      <!-- First Name -->
+      <label>
+        First Name *
+        <input
+          type="text"
+          formControlName="first_name"
+          placeholder="Enter first name"
+        />
+        @if (isInvalid('first_name')) {
+          <small>Enter at least 2 characters.</small>
+        }
+      </label>
+
+      <!-- Last Name -->
+      <label>
+        Last Name *
+        <input
+          type="text"
+          formControlName="last_name"
+          placeholder="Enter last name"
+        />
+        @if (isInvalid('last_name')) {
+          <small>Enter at least 2 characters.</small>
+        }
+      </label>
+
+      <!-- Email -->
+      <label>
+        Email Address *
+        <input
+          type="email"
+          formControlName="emailId"
+          placeholder="example@gmail.com"
+        />
+        @if (isInvalid('emailId')) {
+          <small>Enter a valid email address.</small>
+        }
+      </label>
+
+      <!-- Age -->
+      <label>
+        Age *
+        <input
+          type="number"
+          formControlName="age"
+          min="18"
+          max="100"
+        />
+        @if (isInvalid('age')) {
+          <small>Age must be between 18 and 100.</small>
+        }
+      </label>
+
+      <!-- Gender -->
+      <label>
+        Gender *
+        <select formControlName="gender">
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        @if (isInvalid('gender')) {
+          <small>Please select a gender.</small>
+        }
+      </label>
+
+      <!-- Mobile Number -->
+      <label>
+        Mobile Number *
+        <input
+          type="tel"
+          formControlName="mobilenumber"
+          maxlength="10"
+          placeholder="Enter 10-digit mobile number"
+        />
+        @if (isInvalid('mobilenumber')) {
+          <small>Enter a valid 10-digit Indian mobile number.</small>
+        }
+      </label>
+
+      <!-- PAN Number -->
+      <label>
+        PAN Number *
+        <input
+          type="text"
+          formControlName="pan_no"
+          maxlength="10"
+          placeholder="ABCDE1234F"
+          style="text-transform: uppercase"
+        />
+        @if (isInvalid('pan_no')) {
+          <small>Enter a valid 10-character PAN number.</small>
+        }
+      </label>
+
+      <!-- Aadhaar Number -->
+      <label>
+        Aadhaar Number *
+        <input
+          type="text"
+          formControlName="adhaar_no"
+          maxlength="12"
+          inputmode="numeric"
+          placeholder="Enter 12-digit Aadhaar number"
+        />
+        @if (isInvalid('adhaar_no')) {
+          <small>Enter a valid 12-digit Aadhaar number.</small>
+        }
+      </label>
+
+      <!-- Created Date -->
+      <label>
+        Created Date *
+        <input
+          type="date"
+          formControlName="createdAt"
+        />
+        @if (isInvalid('createdAt')) {
+          <small>Please select a date.</small>
+        }
+      </label>
+
+      <!-- Status -->
+      <label>
+        Status
+        <select formControlName="status">
+          <option [ngValue]="true">Active</option>
+          <option [ngValue]="false">Inactive</option>
+        </select>
+      </label>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+
+      @if (contact) {
+        <button
+          type="button"
+          class="cancel"
+          (click)="cancelEdit.emit()"
+          [disabled]="saving">
+          Cancel
+        </button>
+      }
+
+      <button
+        type="submit"
+        class="submit"
+        [disabled]="saving">
+        {{ saving ? 'Saving...' :
+           (contact ? 'Update Contact' : 'Save Contact') }}
+      </button>
+
+    </div>
+
+  </form>
+</section>

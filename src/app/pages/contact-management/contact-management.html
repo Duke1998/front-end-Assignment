@@ -1,0 +1,96 @@
+
+<div class="page-heading">
+  <div>
+    <h1>Contact Management</h1>
+    <p>Manage your contacts in one place.</p>
+  </div>
+
+  <button class="refresh-btn" (click)="loadContacts()" [disabled]="loading">
+    Refresh Contacts
+  </button>
+</div>
+
+@if (notification) {
+  <div class="notification" [class.error]="notificationType === 'error'"
+       role="status">
+    {{ notification }}
+    <button (click)="notification = ''" aria-label="Dismiss notification">
+      ×
+    </button>
+  </div>
+}
+
+<app-contact-form
+  [contact]="selectedContact"
+  [saving]="saving"
+  (saveContact)="saveContact($event)"
+  (cancelEdit)="cancelEdit()">
+</app-contact-form>
+
+<section class="list-card">
+  <div class="list-heading">
+    <div>
+      <h2>All Contacts</h2>
+      <p>{{ filteredContacts.length }} contacts found</p>
+    </div>
+
+    <input
+      type="search"
+      placeholder="Search contacts..."
+      aria-label="Search contacts"
+      [value]="searchTerm"
+      (input)="searchTerm = $any($event.target).value"
+    />
+  </div>
+
+  @if (loading) {
+    <p class="state-message" role="status">Loading contacts...</p>
+  } @else if (filteredContacts.length === 0) {
+    <p class="state-message">No contacts found.</p>
+  } @else {
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Gender</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (contact of filteredContacts; track contact.id) {
+            <tr>
+              <td>{{ contact.first_name }} {{ contact.last_name }}</td>
+              <td>{{ contact.emailId }}</td>
+              <td>{{ contact.mobilenumber }}</td>
+              <td>{{ contact.gender }}</td>
+              <td>
+                <span class="status" [class.inactive]="!contact.status">
+                  {{ contact.status ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+              <td>
+                <div class="actions">
+            <button type="button" class="edit-btn" (click)="editContact(contact)" [disabled]="loading || saving || !!deletingId">
+                Edit
+            </button>
+
+                  <button class="delete-btn"
+                          (click)="deleteContact(contact)"
+                          [disabled]="loading || saving || !!deletingId">
+                    {{ deletingId === contact.id ? 'Deleting...' : 'Delete' }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
+

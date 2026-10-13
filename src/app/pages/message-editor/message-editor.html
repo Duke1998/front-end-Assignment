@@ -1,0 +1,191 @@
+
+<div class="editor-page">
+
+  <div class="breadcrumb">
+    <span>Campaigns</span>
+    <span>/</span>
+    <span>Templates</span>
+    <span>/</span>
+    <strong>Customize Your Message</strong>
+  </div>
+
+  <div class="page-heading">
+    <div class="back-icon">←</div>
+    <div>
+      <h1>Customize Your Message</h1>
+      <p>Personalize your template message with dynamic content.</p>
+    </div>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+
+    <section class="editor-card">
+      <div class="section-title">
+        <span class="section-icon">▣</span>
+        <div>
+          <h2>Header</h2>
+          <p>Configure optional media and location information.</p>
+        </div>
+      </div>
+
+      <div class="field-grid">
+        <label>
+          Image URL
+          <input formControlName="imageUrl"
+                 placeholder="https://example.com/image.png" />
+          <small>Enter a public image URL.</small>
+        </label>
+
+        <label>
+          Video URL
+          <input formControlName="videoUrl"
+                 placeholder="https://example.com/video.mp4" />
+          <small>Enter a public video URL.</small>
+        </label>
+
+        <label>
+          Document URL
+          <input formControlName="documentUrl"
+                 placeholder="https://example.com/document.pdf" />
+          <small>Enter a public document URL.</small>
+        </label>
+
+        <div class="coordinate-grid">
+          <label>
+            Latitude
+            <input formControlName="latitude"
+                   placeholder="e.g. 12.9716" />
+          </label>
+
+          <label>
+            Longitude
+            <input formControlName="longitude"
+                   placeholder="e.g. 77.5946" />
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="editor-card">
+      <div class="section-title">
+        <span class="section-icon">☰</span>
+        <div>
+          <h2>Message</h2>
+          <p>Configure your message content and dynamic variables.</p>
+        </div>
+      </div>
+
+      <label class="full-field">
+        Message Content *
+        <textarea rows="4"
+                  formControlName="message"
+                  placeholder="Enter your message..."></textarea>
+        @if (form.controls.message.invalid &&
+             form.controls.message.touched) {
+          <small class="error">Message content is required.</small>
+        }
+      </label>
+
+      <div class="field-grid message-fields">
+        <label>
+          Variable 1
+          <input formControlName="variable1"
+                 placeholder="Enter variable value" />
+        </label>
+
+        <label>
+          Variable 2
+          <input formControlName="variable2"
+                 placeholder="Enter variable value" />
+        </label>
+      </div>
+
+      <div class="attribute-area">
+        <label>Insert Attribute</label>
+
+        <button type="button"
+                class="attribute-trigger"
+                (click)="toggleAttributes()"
+                [attr.aria-expanded]="showAttributes">
+          Select an attribute
+          <span>⌄</span>
+        </button>
+
+        @if (showAttributes) {
+          <div class="attribute-menu">
+            <input
+              type="search"
+              placeholder="Search attributes..."
+              [value]="searchTerm"
+              (input)="searchTerm = $any($event.target).value"
+            />
+
+            @for (attribute of filteredAttributes; track attribute) {
+              <button type="button"
+                      class="attribute-option"
+                      (click)="selectAttribute(attribute)">
+                {{ attribute }}
+              </button>
+            } @empty {
+              <p class="empty-state">No attributes found.</p>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="editor-card">
+      <div class="section-title">
+        <span class="section-icon">▤</span>
+        <div>
+          <h2>Buttons</h2>
+          <p>Configure the actions available to your recipients.</p>
+        </div>
+      </div>
+
+      <div class="field-grid">
+        <label>
+          Yes Button Payload
+          <input formControlName="yesPayload"
+                 placeholder="Yes" />
+        </label>
+
+        <label>
+          No Button Payload
+          <input formControlName="noPayload"
+                 placeholder="No" />
+        </label>
+
+        <label>
+          Unsubscribe Payload
+          <input formControlName="unsubscribePayload"
+                 placeholder="Unsubscribe" />
+        </label>
+
+        <label>
+          Visit Website URL
+          <input formControlName="websiteUrl"
+                 placeholder="https://example.com" />
+        </label>
+      </div>
+    </section>
+
+    @if (notification) {
+      <div class="notification" role="status">
+        {{ notification }}
+      </div>
+    }
+
+    <div class="footer-actions">
+      <button type="button" class="cancel-btn"
+              (click)="cancel()">
+        Cancel
+      </button>
+
+      <button type="submit" class="done-btn">
+        Done composing →
+      </button>
+    </div>
+
+  </form>
+</div>
