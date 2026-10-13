@@ -1,59 +1,74 @@
-# FrontendAssignment
+Frontend Assignment — Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.2.
+A responsive frontend application developed using Angular 22, TypeScript, Reactive Forms, and REST API integration.
 
-## Development server
+Features
 
-To start a local development server, run:
+Task 1:The Message Editor is a responsive and interactive application designed to customize message templates efficiently
+Task 2: The Contact Management application is developed using Angular 22, TypeScript, HTML5, CSS3, Angular Reactive Forms, RxJS, and REST APIs.
 
-```bash
-ng serve
-```
+Base URL:
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+https://65c0cfa6dc74300bce8cc64d.mockapi.io/Contact/profile
 
-## Code scaffolding
+Supported operations: GET, POST, PUT, DELETE.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Installation
 
-```bash
-ng generate component component-name
-```
+Clone the repository:
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+git clone https://github.com/Duke1998/front-end-Assignment.git
 
-```bash
-ng generate --help
-```
+Install dependencies:
 
-## Building
+npm install
 
-To build the project run:
+Start the development server:
 
-```bash
-ng build
-```
+npm start
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open http://localhost:4200.
 
-## Running unit tests
+Application Routes
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+/message-editor — Message customization
 
-```bash
-ng test
-```
+/contacts — Contact management
 
-## Running end-to-end tests
+Build
 
-For end-to-end (e2e) testing, run:
+npx ng build --configuration production
 
-```bash
-ng e2e
-```
+Quality Checks
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+The application was visually reviewed at 375px, 768px, and desktop widths.
 
-## Additional Resources
+Production Lighthouse results (one measured run):
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Category
+
+Score
+
+Performance
+
+74
+
+Accessibility
+
+94
+
+Best Practices
+
+100
+
+SEO
+
+90
+
+Notes
+
+The Message Editor demonstrates frontend form interactions and logs its configuration locally. The Contact Management feature uses the provided MockAPI endpoint. Use dummy contact information when testing.
+
+Repository
+
+https://github.com/Duke1998/front-end-Assignment
